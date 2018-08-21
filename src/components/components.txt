@@ -1,0 +1,3 @@
+The components file is meant for the single purpose
+of holding functional components also known as stateless
+components

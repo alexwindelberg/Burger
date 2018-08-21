@@ -1,0 +1,2 @@
+The containers folder is for the single purpose of holding
+Stateful Components, Components built with the Class keyword
