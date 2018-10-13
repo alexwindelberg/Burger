@@ -17,7 +17,10 @@ const buildControls = (props) => (
                 key={ctrl.label} 
                 label={ctrl.label} 
                 added={() => props.ingredientAdded(ctrl.type)}
-                removed={() => props.ingredientRemove(ctrl.type)}/>
+                removed={() => props.ingredientRemove(ctrl.type)}
+                // Get the disabled data and as this function loops
+                // check to see if the type is true or false
+                disabled={props.disabled[ctrl.type]}/>
           ))}
     </div>
 

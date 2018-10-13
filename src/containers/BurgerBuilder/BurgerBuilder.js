@@ -52,12 +52,22 @@ class BurgerBuilder extends Component {
     }
 
     render () {
+        // Create an array with all the types and number of them
+        const disableInfo = {
+            ...this.state.ingredients
+        };
+        // Loop through this array and see if there are any that have 0 added
+        // if it's or less make that type equal false
+        for (let key in disableInfo) {
+            disableInfo[key] = disableInfo[key] <= 0
+        }
         return (
             <Aux>
                 <Burger ingredients={this.state.ingredients}/>
                 <BuildControls 
                     ingredientAdded={this.addIngredientHandler} 
-                    ingredientRemove={this.removeIngredientHandler}/>
+                    ingredientRemove={this.removeIngredientHandler}
+                    disabled={disableInfo}/>
             </Aux>
         );
     }
