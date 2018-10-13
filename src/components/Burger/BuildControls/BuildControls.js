@@ -12,6 +12,7 @@ const controls = [
 const buildControls = (props) => (
 
     <div className={classes.BuildControls}>
+          <p>Current Price: <strong>{props.price.toFixed(2)}</strong></p>
           {controls.map(ctrl => (
               <BuildContol 
                 key={ctrl.label} 
@@ -20,8 +21,9 @@ const buildControls = (props) => (
                 removed={() => props.ingredientRemove(ctrl.type)}
                 // Get the disabled data and as this function loops
                 // check to see if the type is true or false
-                disabled={props.disabled[ctrl.type]}/>
+                disabled={props.disabled[ctrl.type]} />
           ))}
+          <button>Order Now</button>
     </div>
 
 );
