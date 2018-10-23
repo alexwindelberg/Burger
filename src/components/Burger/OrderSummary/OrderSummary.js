@@ -5,9 +5,12 @@ import Button from '../../UI/Button/Button';
 class OrderSummary extends Component {
 
     // checking out when this component actually updates
-    componentWillUpdate() {
-        console.log('[OrderSummary will update]');
-    }
+    // we could actually make this component a functional
+    // component as this component doesn't need to check
+    // if it needs to be updated or changes the state
+    // componentWillUpdate() {
+    //     console.log('[OrderSummary] will update');
+    // }
 
     render () {
 
