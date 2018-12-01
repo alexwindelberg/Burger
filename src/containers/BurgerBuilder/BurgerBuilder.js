@@ -31,6 +31,7 @@ class BurgerBuilder extends Component {
     // other components that depend on this data will give you an error
     // we should check if we first have data and if we don't show a spinner
     componentDidMount() {
+        //console.log(this.props);
         axios.get('https://burger-app-dc5ff.firebaseio.com/ingredients.json')
              .then(response => {
                 this.setState({ingredients: response.data});
@@ -94,31 +95,42 @@ class BurgerBuilder extends Component {
 
     purchaseContinueHandler = () => {
         // alert('continue!');
-        this.setState({ loading: true });
-        const order = {
-            ingredients: this.state.ingredients,
-            price: this.state.totalPrice,
-            customer: {
-                name: 'Alex Wind',
-                address: {
-                    street: 'Teststreet 1',
-                    zipCode: '4123123',
-                    country: 'Germany'
-                },
-                email: 'test@test.com'
-            },
-            deliveryMethod: 'fastest'
-        }
+        // this.setState({ loading: true });
+        // const order = {
+        //     ingredients: this.state.ingredients,
+        //     price: this.state.totalPrice,
+        //     customer: {
+        //         name: 'Alex Wind',
+        //         address: {
+        //             street: 'Teststreet 1',
+        //             zipCode: '4123123',
+        //             country: 'Germany'
+        //         },
+        //         email: 'test@test.com'
+        //     },
+        //     deliveryMethod: 'fastest'
+        // }
 
-        // send request to backend and store data for now
-        // in firebase we need to add the .json in order to make it work 
-        axios.post('/orders.json', order)
-             .then(response => {
-                this.setState({ loading: false, purchasing: false });
-             })
-             .catch(error => {
-                this.setState({ loading: false, purchasing: false });
-             });
+        // // send request to backend and store data for now
+        // // in firebase we need to add the .json in order to make it work 
+        // axios.post('/orders.json', order)
+        //      .then(response => {
+        //         this.setState({ loading: false, purchasing: false });
+        //      })
+        //      .catch(error => {
+        //         this.setState({ loading: false, purchasing: false });
+        //      });
+        const queryParams = [];
+        
+        for (let i in this.state.ingredients) {
+            queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.state.ingredients[i]));
+        }
+        const queryString = queryParams.join('&');
+        this.props.history.push({
+            pathname: '/checkout',
+            search: '?' + queryString
+        });
+
     }
 
     render () {
@@ -153,8 +165,8 @@ class BurgerBuilder extends Component {
             orderSummary = <OrderSummary 
                             ingredients={this.state.ingredients}
                             totalCost={this.state.totalPrice}
-                            purchaseCancelled = {this.purchaseCancelHandler}
                             purchaseContinue  = {this.purchaseContinueHandler}
+                            purchaseCancelled = {this.purchaseCancelHandler}
                             />;
         }
 
