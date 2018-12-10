@@ -69,9 +69,16 @@ class ContactData extends Component {
         //prevents the default behavior which is in this case to reload the page
         event.preventDefault();
         this.setState({ loading: true });
+        const formData = {};
+        for (let formElementIdentifier in this.state.orderForm) {
+            formData[formElementIdentifier] = this.state.orderForm[formElementIdentifier].value;
+        }
+
+
         const order = {
             ingredients: this.props.ingredients,
-            price: this.props.price
+            price: this.props.price,
+            orderData: formData
         }
         // send request to backend and store data for now
         // in firebase we need to add the .json in order to make it work 
@@ -116,7 +123,7 @@ class ContactData extends Component {
         }
 
         let form = (
-            <form>
+            <form onSubmit={this.orderHandler}>
             {formElementsArray.map(formElement => (
                 <Input 
                     key={formElement.id}
