@@ -85,6 +85,25 @@ class ContactData extends Component {
              });
     }
 
+    inputChangedHandler = (event, inputIdentifier) => {
+        // This is a shallow copy of the object above, what this means is that
+        // when we made a copy of this, we copied the upper must elements but the
+        // nested elements were not deep copied, the pointers were copied. If we were
+        // to change the values in the copy we would also copy the values in the original
+        const updatedOrderForm = {
+            ...this.state.orderForm
+        };
+        // But we don't really need the data in the nested areas so what we can do is 
+        // copy the outter attribute which are the names we need such as Name, Street, email ect.
+        // and loop through those and access the value property to mutate
+        const updatedFormElement = {
+            ...updatedOrderForm[inputIdentifier]
+        };
+        updatedFormElement.value = event.target.value;
+        updatedOrderForm[inputIdentifier] = updatedFormElement;
+        this.setState({orderForm: updatedOrderForm});
+    }
+
 
     render () {
         const formElementsArray = [];
@@ -103,7 +122,8 @@ class ContactData extends Component {
                     key={formElement.id}
                     elementType={formElement.config.elementType}
                     elementConfig={formElement.config.elementConfig}
-                    value={formElement.config.value} />
+                    value={formElement.config.value}
+                    changed={(event) => this.inputChangedHandler(event, formElement.id)} />
             ))}
             <Button btnType="Success" clicked={this.orderHandler}>Order</Button>
         </form>
