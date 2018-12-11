@@ -8,7 +8,7 @@ const input = (props) => {
     const inputClasses = [classes.InputElement];
 
     // is this form item False invalid? True(yes), it is invalid.
-    if (props.invalid && props.shouldValidate) {
+    if (props.invalid && props.shouldValidate && props.touched) {
         inputClasses.push(classes.Invalid);
     }
 
